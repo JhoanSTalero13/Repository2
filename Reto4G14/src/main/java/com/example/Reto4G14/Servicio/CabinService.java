@@ -5,6 +5,7 @@
 package com.example.Reto4G14.Servicio;
 
 import com.example.Reto4G14.Modelo.Cabin;
+
 import com.example.Reto4G14.Repositorio.CabinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,30 @@ public class CabinService {
         }
     }
     public Cabin update(Cabin cabin){
-        if(cabin.getId()== null){
-            Optional<Cabin> cab= cabinRepository.getCabin(cabin.getId());
-            if(cab.isPresent()){
-                cabinRepository.save(cabin);
+        if(cabin.getId()!=null){
+            Optional<Cabin>g= cabinRepository.getCabin(cabin.getId());
+            if(!g.isEmpty()){
+                if(cabin.getName()!=null){
+                    g.get().setName(cabin.getName());
+                }
+                if(cabin.getBrand()!=null){
+                    g.get().setBrand(cabin.getBrand());
+                }
+
+                if(cabin.getRooms()!=null){
+                    g.get().setRooms(cabin.getRooms());
+                }
+                if(cabin.getDescription()!=null){
+                    g.get().setDescription(cabin.getDescription());
+                }
+                if(cabin.getMessages()!=null){
+                    g.get().setMessages(cabin.getMessages());
+                }
+                if(cabin.getReservations()!=null){
+                    g.get().setReservations(cabin.getReservations());
+                }
+
+                return cabinRepository.save(g.get());
             }
         }
         return cabin;
